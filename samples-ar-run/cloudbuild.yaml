@@ -16,7 +16,7 @@ steps:
         docker push ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:latest
 
   - id: "Deploy container image to Cloud Run"
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
     args:
       - -c

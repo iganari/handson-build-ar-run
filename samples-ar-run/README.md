@@ -138,7 +138,7 @@ gcloud builds triggers create github \
   --repo-owner iganari \
   --repo-name handson-cloudbuild \
   --branch-pattern '^main$' \
-  --build-config cloudbuild.yaml \
+  --build-config samples-ar-run/cloudbuild.yaml \
   --project ${_gc_pj_id} \
   --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common}
 ```
