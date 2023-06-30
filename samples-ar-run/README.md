@@ -47,19 +47,20 @@ gcloud beta iam service-accounts create sa-${_common}-cloudbuild \
 ```
 
 + Service Account の確認
+
+```
+gcloud beta iam service-accounts describe \
+  sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
+  --project ${_gc_pj_id} \
+  --format json
+```
+
++ Role を付与する
   + Logs Writer( `roles/logging.logWriter` )
   + Storage Admin( `roles/storage.admin` )
   + Artifact Registry Writer( `roles/artifactregistry.writer` )
   + Cloud Run Developer( `roles/run.developer` )
   + Service Account User( `roles/iam.serviceAccountUser` ) 
-
-
-
-```
-gcloud beta iam service-accounts describe sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com --project ${_gc_pj_id} --format json
-```
-
-+ Role を付与する
 
 ```
 ### Logs Writer
@@ -93,12 +94,32 @@ gcloud beta projects add-iam-policy-binding ${_gc_pj_id} \
   --project ${_gc_pj_id}
 ```
 
+### 2. Google Cloud Storage Bucket の作成
 
+```
+gcloud storage buckets create gs://${_gc_pj_id}-${_common} \
+  --default-storage-class Standard \
+  --location ${_region} \
+  --uniform-bucket-level-access \
+  --project ${_gc_pj_id}
+```
 
+### 3. Artifact Registry のリポジトリの作成
 
+```
+export _ar_repo_name=`echo ar-${_common}`
+export _region='asia-northeast1'
+```
+```
+gcloud beta artifacts repositories create ${_ar_repo_name} \
+  --repository-format docker \
+  --location ${_region} \
+  --project ${_gc_pj_id}
+```
 
+### 4. Cloud Build Trigger の作成
 
-
+※ ここで GitHub との連携も行う
 
 
 
