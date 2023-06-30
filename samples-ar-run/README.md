@@ -117,15 +117,7 @@ gcloud beta artifacts repositories create ${_ar_repo_name} \
   --project ${_gc_pj_id}
 ```
 
-### 4. Cloud Build Trigger の作成
-
-※ ここで GitHub との連携も行う
-
-
-
-
-
-### 1. hoge
+### 4. GitHub と Cloud Build の連携設定
 
 Google Cloud と GitHub を連携する
 
@@ -133,3 +125,28 @@ Google Cloud と GitHub を連携する
 ### GitHub リポジトリに接続する
 https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github
 ```
+
+すくそ
+
+
+### 4. Cloud Build Trigger の作成
+
+```
+gcloud builds triggers create github \
+  --name cb-tr-${_common} \
+  --service-account projects/${_gc_pj_id}/serviceAccounts/sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
+  --repo-owner iganari \
+  --repo-name handson-cloudbuild \
+  --branch-pattern '^main$' \
+  --build-config cloudbuild.yaml \
+  --project ${_gc_pj_id} \
+  --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common}
+```
+
+
+
+
+
+
+
+### 1. hoge
