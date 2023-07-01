@@ -29,8 +29,8 @@ steps:
         sed -i "s/_RUN_SERVICE_NAME/${_RUN_SERVICE_NAME}/g"                         service.yaml
         sed -i "s/_RUN_SERVICE_PORT/${_RUN_SERVICE_PORT}/g"                           service.yaml
         echo "debug 1"
-        sed -i "s/_ARTIFACT_RRGISTRY_REPO_NAME/${_ARTIFACT_RRGISTRY_REPO_NAME}/g"  service.yaml
-        cat service.yaml
+        # sed -i "s/_ARTIFACT_RRGISTRY_REPO_NAME/${_ARTIFACT_RRGISTRY_REPO_NAME}/g"  service.yaml
+        # cat service.yaml
         sed -i "s/_CONTAINER_IMAGE_NAME/${_CONTAINER_IMAGE_NAME}/g"               service.yaml
         sed -i "s/_TAG/${COMMIT_SHA}/g"                                           service.yaml
         sed -i "s/_SERVICE_ACCOUNT/${_SERVICE_ACCOUNT}/g"                         service.yaml
