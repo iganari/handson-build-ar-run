@@ -23,11 +23,12 @@ steps:
     args:
       - -c
       - |
-        cp -a service.yaml.template                                               service.yaml
-        sed -i -e "s/_RUN_SERVICE_REGION/${_RUN_SERVICE_REGION}/g"                                 service.yaml
+        cp -a service.yaml.template                                                  service.yaml
+        sed -i -e "s/_RUN_SERVICE_REGION/${_RUN_SERVICE_REGION}/g"                   service.yaml
         sed -i -e "s/_RUN_SERVICE_NAME/${_RUN_SERVICE_NAME}/g"                       service.yaml
         sed -i -e "s/_RUN_SERVICE_PORT/${_RUN_SERVICE_PORT}/g"                       service.yaml
         sed -i -e "s/_ARTIFACT_RRGISTRY_REPO_NAME/${_ARTIFACT_RRGISTRY_REPO_NAME}/g" service.yaml
+        cat service.yaml
         sed -i -e "s/_CONTAINER_IMAGE_NAME/${_CONTAINER_IMAGE_NAME}/g"               service.yaml
         sed -i -e "s/_TAG/${COMMIT_SHA}/g"                                           service.yaml
         sed -i -e "s/_SERVICE_ACCOUNT/${_SERVICE_ACCOUNT}/g"                         service.yaml
