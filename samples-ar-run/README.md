@@ -81,10 +81,10 @@ gcloud beta projects add-iam-policy-binding ${_gc_pj_id} \
   --role="roles/artifactregistry.writer" \
   --project ${_gc_pj_id}
 
-### Cloud Run Developer
+### Cloud Run Admin
 gcloud beta projects add-iam-policy-binding ${_gc_pj_id} \
   --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
-  --role="roles/run.developer" \
+  --role="roles/run.admin" \
   --project ${_gc_pj_id}
 
 ### Service Account User
