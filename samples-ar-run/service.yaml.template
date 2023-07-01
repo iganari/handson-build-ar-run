@@ -12,7 +12,7 @@ spec:
         autoscaling.knative.dev/maxScale: '5'
     spec:
       containers:
-      - image: _AR_REPO_NAME/_CONTAINER_IMAGE_NAME:_TAG
+      - image: _ARTIFACT_RRGISTRY_REPO_NAME/_CONTAINER_IMAGE_NAME:_TAG
         ports:
         - containerPort: _RUN_SERVICE_PORT
       serviceAccountName: _SERVICE_ACCOUNT
