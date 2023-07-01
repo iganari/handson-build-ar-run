@@ -3,6 +3,7 @@ steps:
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args: ["auth", "list"]
+
   - id: "Build the container image"
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
@@ -18,17 +19,18 @@ steps:
   - id: "Deploy container image to Cloud Run"
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
+    dir: 'samples-ar-run'
     args:
       - -c
       - |
-        cp -a service.yaml.template service.yaml
-        sed -e "s/rakus/${_RUN_SERVICE_REGION}/g" service.yaml
-        sed -e "s/_RUN_SERVICE_NAME/${_RUN_SERVICE_NAME}/g" service.yaml
-        sed -e "s/_RUN_SERVICE_PORT/${_RUN_SERVICE_PORT}/g" service.yaml
+        cp -a service.yaml.template                                               service.yaml
+        sed -e "s/rakus/${_RUN_SERVICE_REGION}/g"                                 service.yaml
+        sed -e "s/_RUN_SERVICE_NAME/${_RUN_SERVICE_NAME}/g"                       service.yaml
+        sed -e "s/_RUN_SERVICE_PORT/${_RUN_SERVICE_PORT}/g"                       service.yaml
         sed -e "s/_ARTIFACT_RRGISTRY_REPO_NAME/${_ARTIFACT_RRGISTRY_REPO_NAME}/g" service.yaml
-        sed -e "s/_CONTAINER_IMAGE_NAME/${_CONTAINER_IMAGE_NAME}/g" service.yaml
-        sed -e "s/_TAG/${COMMIT_SHA}/g" service.yaml
-
+        sed -e "s/_CONTAINER_IMAGE_NAME/${_CONTAINER_IMAGE_NAME}/g"               service.yaml
+        sed -e "s/_TAG/${COMMIT_SHA}/g"                                           service.yaml
+        sed -e "s/_SERVICE_ACCOUNT/${_SERVICE_ACCOUNT}/g"                         service.yaml
         gcloud run services replace service.yaml --platform managed --project ${PROJECT_ID} --allow-unauthenticated
         # gcloud run deploy ${_RUN_SERVICE_NAME} --platform managed --image ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:${COMMIT_SHA} --region ${_RUN_SERVICE_REGION} --port ${_RUN_SERVICE_PORT} --allow-unauthenticated
 

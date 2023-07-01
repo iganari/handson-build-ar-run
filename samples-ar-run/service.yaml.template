@@ -15,6 +15,6 @@ spec:
       - image: _ARTIFACT_RRGISTRY_REPO_NAME/_CONTAINER_IMAGE_NAME:_TAG
         ports:
         - containerPort: _RUN_SERVICE_PORT
-      # serviceAccountName: hogehoge@developer.gserviceaccount.com
+      serviceAccountName: _SERVICE_ACCOUNT
       timeoutSeconds: 300
 
