@@ -32,7 +32,7 @@ steps:
         sed -i -e "s/_TAG/${COMMIT_SHA}/g"                                           service.yaml
         sed -i -e "s/_SERVICE_ACCOUNT/${_SERVICE_ACCOUNT}/g"                         service.yaml
         cat service.yaml
-        gcloud run services replace service.yaml --platform managed --project ${PROJECT_ID} --allow-unauthenticated
+        # gcloud run services replace service.yaml --platform managed --project ${PROJECT_ID}
         # gcloud run deploy ${_RUN_SERVICE_NAME} --platform managed --image ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:${COMMIT_SHA} --region ${_RUN_SERVICE_REGION} --port ${_RUN_SERVICE_PORT} --allow-unauthenticated
 
 logsBucket: gs://${_GCS_BUCKET}
