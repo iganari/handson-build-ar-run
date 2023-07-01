@@ -37,7 +37,7 @@ cd handson-cloudbuild
 
 ### 1. Service Account の作成と Role の付与
 
-+ Service Account の作成
++ Cloud Build 用の Service Account の作成
 
 ```
 gcloud beta iam service-accounts create sa-${_common}-cloudbuild \
@@ -94,6 +94,32 @@ gcloud beta projects add-iam-policy-binding ${_gc_pj_id} \
   --project ${_gc_pj_id}
 ```
 
+
++ Cloud Run 用の Service Account の作成
+
+```
+gcloud beta iam service-accounts create sa-${_common}-cloudrun \
+  --description="Cloud Run 毎に Service Account を付与する" \
+  --display-name="sa-${_common}-cloudbuild" \
+  --project ${_gc_pj_id}
+```
+
++ Service Account の確認
+
+```
+gcloud beta iam service-accounts describe \
+  sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
+  --project ${_gc_pj_id} \
+  --format json
+```
+
++ Role を付与する
+
+```
+今の所無し
+```
+
+
 ### 2. Google Cloud Storage Bucket の作成
 
 ```
@@ -140,7 +166,7 @@ gcloud builds triggers create github \
   --branch-pattern '^main$' \
   --build-config samples-ar-run/cloudbuild.yaml \
   --project ${_gc_pj_id} \
-  --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/{_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common}
+  --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/${_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common},_SERVICE_ACCOUNT=sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com
 ```
 
 
@@ -149,4 +175,6 @@ gcloud builds triggers create github \
 
 
 
-### 1. hoge
+### 1. memo
+
+Cloud Run のSAも作っておく

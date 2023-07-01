@@ -1,0 +1,20 @@
+# https://cloud.google.com/run/docs/reference/yaml/v1
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  labels:
+    cloud.googleapis.com/location: _RUN_SERVICE_REGION
+  name: _RUN_SERVICE_NAME
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '5'
+    spec:
+      containers:
+      - image: _ARTIFACT_RRGISTRY_REPO_NAME/_CONTAINER_IMAGE_NAME:_TAG
+        ports:
+        - containerPort: _RUN_SERVICE_PORT
+      # serviceAccountName: hogehoge@developer.gserviceaccount.com
+      timeoutSeconds: 300
+
