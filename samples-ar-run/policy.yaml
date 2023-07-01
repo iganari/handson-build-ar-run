@@ -1,0 +1,5 @@
+# https://cloud.google.com/run/docs/authenticating/public
+bindings:
+- members:
+  - allUsers
+  role: roles/run.invoker
