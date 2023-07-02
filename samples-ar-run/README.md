@@ -152,8 +152,13 @@ Google Cloud と GitHub を連携する
 https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github
 ```
 
-すくそ
+![](./_img/04-01.png)
 
+![](./_img/04-02.png)
+
+![](./_img/04-03.png)
+
+![](./_img/04-04.png)
 
 ### 4. Cloud Build Trigger の作成
 
@@ -175,6 +180,75 @@ gcloud builds triggers create github \
 
 
 
-### 1. memo
+### 99. クリーンアップ
 
-Cloud Run のSAも作っておく
+Cloud Run
+
+```
+gcloud run services delete run-${_common} --region ${_region} --project ${_gc_pj_id}
+```
+
+cloud build
+
+```
+gcloud builds triggers delete cb-tr-${_common} --project ${_gc_pj_id}
+```
+
+ar
+
+```
+gcloud beta artifacts repositories delete ${_ar_repo_name} \
+  --location ${_region} \
+  --project ${_gc_pj_id}
+```
+
+gcs
+
+```
+gcloud storage rm -r gs://${_gc_pj_id}-${_common} --project ${_gc_pj_id}
+```
+
+sa
+
+```
+### Logs Writer
+gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
+  --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
+  --role="roles/logging.logWriter" \
+  --project ${_gc_pj_id}
+
+### Storage Admin
+gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
+  --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
+  --role="roles/storage.admin" \
+  --project ${_gc_pj_id}
+
+### Artifact Registry Writer
+gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
+  --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer" \
+  --project ${_gc_pj_id}
+
+### Cloud Run Admin
+gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
+  --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
+  --role="roles/run.admin" \
+  --project ${_gc_pj_id}
+
+### Service Account User
+gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
+  --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
+  --role="roles/iam.serviceAccountUser" \
+  --project ${_gc_pj_id}
+
+
+
+gcloud beta iam service-accounts delete sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
+  --project ${_gc_pj_id}
+
+gcloud beta iam service-accounts delete sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com \
+  --project ${_gc_pj_id}
+```
+
+
+
