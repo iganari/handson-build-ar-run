@@ -1,10 +1,5 @@
 steps:
-  # - id: "gcloud auth 1"
-  #   name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'gcloud'
-  #   args: ["auth", "list"]
-
-  - id: "Build the container image"
+  - id: "Build Container Image to Artifact Registry"
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
     dir: 'samples-ar-run'
@@ -16,14 +11,13 @@ steps:
         docker push ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:${COMMIT_SHA}
         docker push ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:latest
 
-  - id: "Deploy container image to Cloud Run"
+  - id: "Deploy Container Image to Cloud Run"
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
     dir: 'samples-ar-run'
     args:
       - -c
       - |
-        set x
         cp -a service.yaml.template                                               service.yaml
         sed -i "s/_RUN_SERVICE_REGION/${_RUN_SERVICE_REGION}/g"                   service.yaml
         sed -i "s/_RUN_SERVICE_NAME/${_RUN_SERVICE_NAME}/g"                       service.yaml
@@ -32,13 +26,11 @@ steps:
         sed -i "s/_CONTAINER_IMAGE_NAME/${_CONTAINER_IMAGE_NAME}/g"               service.yaml
         sed -i "s/_TAG/${COMMIT_SHA}/g"                                           service.yaml
         sed -i "s/_SERVICE_ACCOUNT/${_SERVICE_ACCOUNT}/g"                         service.yaml
-        # cat service.yaml
         gcloud run services replace service.yaml --platform managed --project ${PROJECT_ID}
         gcloud run services set-iam-policy ${_RUN_SERVICE_NAME} policy.yaml --region ${_RUN_SERVICE_REGION} --project ${PROJECT_ID} --quiet
 
-        # gcloud run deploy ${_RUN_SERVICE_NAME} --platform managed --image ${_ARTIFACT_RRGISTRY_REPO_NAME}/${_CONTAINER_IMAGE_NAME}:${COMMIT_SHA} --region ${_RUN_SERVICE_REGION} --port ${_RUN_SERVICE_PORT} --allow-unauthenticated
-
 logsBucket: gs://${_GCS_BUCKET}
+timeout: 86400s
 
 substitutions:
   _ARTIFACT_RRGISTRY_REPO_NAME: 'Your Artifact Registry Repository Name' 
@@ -48,4 +40,3 @@ substitutions:
   _RUN_SERVICE_PORT: 'Your Cloud Run Service Port'
   _GCS_BUCKET: 'Your Google Cloud Storage Bucket using Cloud Build logs'
   _SERVICE_ACCOUNT: 'Service Account using Your Cloud Run Service'
-timeout: 86400s
