@@ -2,7 +2,9 @@
 
 ## 概要
 
-ほげほげ
+GitHub と連携した Cloud Build から Cloud Run にサンプルアプリケーションをデプロイします
+
+Cloud Run で使うコンテナイメージの保存先は Artifact Registry を利用します
 
 ![](./_img/overview.png)
 
@@ -182,19 +184,26 @@ gcloud builds triggers create github \
 
 ### 99. クリーンアップ
 
-Cloud Run
+<details>
+<summary>Cloud Run の Service の削除</summary>
 
 ```
 gcloud run services delete run-${_common} --region ${_region} --project ${_gc_pj_id}
 ```
 
-cloud build
+</details>
+
+<details>
+<summary>Cloud Build の Trigger の削除</summary>
 
 ```
 gcloud builds triggers delete cb-tr-${_common} --project ${_gc_pj_id}
 ```
 
-ar
+</details>
+
+<details>
+<summary>Artifact Registry の Repository の削除</summary>
 
 ```
 gcloud beta artifacts repositories delete ${_ar_repo_name} \
@@ -202,13 +211,19 @@ gcloud beta artifacts repositories delete ${_ar_repo_name} \
   --project ${_gc_pj_id}
 ```
 
-gcs
+</details>
+
+<details>
+<summary>Google Cloud Storage の Bucket の削除</summary>
 
 ```
 gcloud storage rm -r gs://${_gc_pj_id}-${_common} --project ${_gc_pj_id}
 ```
 
-sa
+</details>
+
+<details>
+<summary>Service Account の削除</summary>
 
 ```
 ### Logs Writer
@@ -250,5 +265,5 @@ gcloud beta iam service-accounts delete sa-${_common}-cloudrun@${_gc_pj_id}.iam.
   --project ${_gc_pj_id}
 ```
 
-
+</details>
 
