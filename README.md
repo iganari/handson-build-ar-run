@@ -1,6 +1,6 @@
 # Hands On Cloud Build
 
-Cloud Build のハンズオン集
+Cloud Build のハンズオン集です :)
 
 
 ## [Cloud Build ---> Cloud Run のサンプル( Artifact Registry )](./samples-ar-run/)
