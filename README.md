@@ -35,13 +35,8 @@ gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 ```
 gcloud beta services enable artifactregistry.googleapis.com --project ${_gc_pj_id}
 gcloud beta services enable cloudbuild.googleapis.com --project ${_gc_pj_id}
-
-
 gcloud beta services enable iam.googleapis.com --project ${_gc_pj_id}
-
-
-
-
+gcloud beta services enable run.googleapis.com --project ${_gc_pj_id}
 ```
 
 + ソースコードを clone する
@@ -137,6 +132,8 @@ gcloud beta iam service-accounts describe \
 
 ### 2. Google Cloud Storage Bucket の作成
 
++ Cloud Storage Bucket の作成をします
+
 ```
 export _region='asia-northeast1'
 ```
@@ -150,6 +147,8 @@ gcloud storage buckets create gs://${_gc_pj_id}-${_common} \
 
 ### 3. Artifact Registry のリポジトリの作成
 
++ Artifact Registry のリポジトリの作成します
+
 ```
 export _ar_repo_name=`echo ar-${_common}`
 ```
@@ -162,7 +161,9 @@ gcloud beta artifacts repositories create ${_ar_repo_name} \
 
 ### 4. GitHub と Cloud Build の連携設定
 
-Google Cloud と GitHub を連携する
+Google Cloud と GitHub を連携します
+
+下記の公式ドキュメントを参考に設定してください
 
 ```
 ### GitHub リポジトリに接続する
@@ -179,6 +180,8 @@ https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github
 
 ### 5. Cloud Build Trigger の作成
 
++ Cloud Build Trigger の作成します
+
 ```
 gcloud builds triggers create github \
   --name cb-tr-${_common} \
@@ -191,10 +194,19 @@ gcloud builds triggers create github \
   --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/${_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common},_SERVICE_ACCOUNT=sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com
 ```
 
-
 ### 6. Cloud Build Trigger の実行
 
 ![](./_img/06-01.png)
+
+![](./_img/06-02.png)
+
+![](./_img/06-03.png)
+
+![](./_img/06-04.png)
+
+![](./_img/06-05.png)
+
+![](./_img/06-06.png)
 
 ### 99. クリーンアップ
 
