@@ -31,6 +31,7 @@ gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 ```
 
 + API の有効化
+  + ※ 他の API の有効化も必要になったタイミングで実施してください
 
 ```
 gcloud beta services enable artifactregistry.googleapis.com --project ${_gc_pj_id}
@@ -39,7 +40,7 @@ gcloud beta services enable iam.googleapis.com --project ${_gc_pj_id}
 gcloud beta services enable run.googleapis.com --project ${_gc_pj_id}
 ```
 
-+ ソースコードを clone する
++ ソースコードを clone します
 
 ```
 git clone https://github.com/iganari/handson-build-ar-run.git
@@ -48,7 +49,7 @@ cd handson-build-ar-run
 
 ### 1. Service Account の作成と Role の付与
 
-+ Cloud Build 用の Service Account の作成
++ Cloud Build 用の Service Account の作成をします
 
 ```
 gcloud beta iam service-accounts create sa-${_common}-cloudbuild \
@@ -57,7 +58,7 @@ gcloud beta iam service-accounts create sa-${_common}-cloudbuild \
   --project ${_gc_pj_id}
 ```
 
-+ Service Account の確認
++ Service Account の確認をします
 
 ```
 gcloud beta iam service-accounts describe \
@@ -66,7 +67,7 @@ gcloud beta iam service-accounts describe \
   --format json
 ```
 
-+ Role を付与する
++ Role を付与します
   + Logs Writer( `roles/logging.logWriter` )
   + Storage Admin( `roles/storage.admin` )
   + Artifact Registry Writer( `roles/artifactregistry.writer` )
@@ -106,7 +107,7 @@ gcloud beta projects add-iam-policy-binding ${_gc_pj_id} \
 ```
 
 
-+ Cloud Run 用の Service Account の作成
++ Cloud Run 用の Service Account の作成をします
 
 ```
 gcloud beta iam service-accounts create sa-${_common}-cloudrun \
@@ -115,7 +116,7 @@ gcloud beta iam service-accounts create sa-${_common}-cloudrun \
   --project ${_gc_pj_id}
 ```
 
-+ Service Account の確認
++ Service Account の確認をします
 
 ```
 gcloud beta iam service-accounts describe \
@@ -124,7 +125,7 @@ gcloud beta iam service-accounts describe \
   --format json
 ```
 
-+ Role を付与する
++ Role を付与します
 
 ```
 今の所無し
@@ -196,25 +197,25 @@ gcloud builds triggers create github \
 
 ### 6. Cloud Build の Trigger の実行
 
-+ 作成した Cloud Build の Trigger の **RUN** ボタンをクリックする
++ 作成した Cloud Build の Trigger の **RUN** ボタンをクリックします
 
 ![](./_img/06-01.png)
 
-+ 先に設定した値で実行する
++ 先に設定した値で実行します
 
 ![](./_img/06-02.png)
 
-+ Build history のページにて実行されていることを確認する
++ Build history のページにて実行されていることを確認します
 
 ![](./_img/06-03.png)
 
 ![](./_img/06-04.png)
 
-+ Cloud Run にデプロイされていることを確認する
++ Cloud Run にデプロイされていることを確認します
 
 ![](./_img/06-05.png)
 
-+ Cloud Run にデプロイされた Service を Web ブラウザで確認する
++ Cloud Run にデプロイされた Service を Web ブラウザで確認します
 
 ![](./_img/06-06.png)
 
