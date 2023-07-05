@@ -17,13 +17,13 @@ export _gc_pj_id='Your Google Cloud Project ID'
 export _common='hnd-cb-sample'
 ```
 
-+ Google Cloud と認証をする
++ Google Cloud と認証をします
 
 ```
 gcloud auth login --no-launch-browser
 ```
 
-+ ローカルの Docker の設定をアップデートする
++ ローカルの Docker の設定をアップデートします
   + https://cloud.google.com/artifact-registry/docs/docker/authentication
 
 ```
@@ -167,7 +167,7 @@ Google Cloud と GitHub を連携します
 下記の公式ドキュメントを参考に設定してください
 
 ```
-### GitHub リポジトリに接続する
+### GitHub リポジトリに接続します
 https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github
 ```
 
