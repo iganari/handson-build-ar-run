@@ -30,11 +30,18 @@ gcloud auth login --no-launch-browser
 gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 ```
 
++ API の有効化
+
+```
+gcloud beta services enable artifactregistry.googleapis.com --project ${_gc_pj_id}
+gcloud beta services enable cloudbuild.googleapis.com --project ${_gc_pj_id}
+```
+
 + ソースコードを clone する
 
 ```
-git clone https://github.com/iganari/handson-cloudbuild.git
-cd handson-cloudbuild
+git clone https://github.com/iganari/handson-build-ar-run.git
+cd handson-build-ar-run
 ```
 
 ### 1. Service Account の作成と Role の付与
@@ -121,9 +128,11 @@ gcloud beta iam service-accounts describe \
 今の所無し
 ```
 
-
 ### 2. Google Cloud Storage Bucket の作成
 
+```
+export _region='asia-northeast1'
+```
 ```
 gcloud storage buckets create gs://${_gc_pj_id}-${_common} \
   --default-storage-class Standard \
@@ -136,7 +145,6 @@ gcloud storage buckets create gs://${_gc_pj_id}-${_common} \
 
 ```
 export _ar_repo_name=`echo ar-${_common}`
-export _region='asia-northeast1'
 ```
 ```
 gcloud beta artifacts repositories create ${_ar_repo_name} \
@@ -169,18 +177,12 @@ gcloud builds triggers create github \
   --name cb-tr-${_common} \
   --service-account projects/${_gc_pj_id}/serviceAccounts/sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
   --repo-owner iganari \
-  --repo-name handson-cloudbuild \
+  --repo-name handson-build-ar-run \
   --branch-pattern '^main$' \
-  --build-config samples-ar-run/cloudbuild.yaml \
+  --build-config ./cloudbuild.yaml \
   --project ${_gc_pj_id} \
   --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/${_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common},_SERVICE_ACCOUNT=sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com
 ```
-
-
-
-
-
-
 
 ### 99. クリーンアップ
 
