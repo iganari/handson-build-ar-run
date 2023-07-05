@@ -2,13 +2,13 @@
 
 ## 概要
 
-GitHub と連携した Cloud Build から Cloud Run にサンプルアプリケーションをデプロイします
+GitHub と連携した Cloud Build から Cloud Run にサンプルアプリケーションをデプロイをするハンズオンです
 
 Cloud Run で使うコンテナイメージの保存先は Artifact Registry を利用します
 
 ![](./_img/overview.png)
 
-## やってみる
+## ハンズオン
 
 ### 0. 準備
 
@@ -194,21 +194,37 @@ gcloud builds triggers create github \
   --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/${_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common},_SERVICE_ACCOUNT=sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com
 ```
 
-### 6. Cloud Build Trigger の実行
+### 6. Cloud Build の Trigger の実行
+
++ 作成した Cloud Build の Trigger の **RUN** ボタンをクリックする
 
 ![](./_img/06-01.png)
 
++ 先に設定した値で実行する
+
 ![](./_img/06-02.png)
+
++ Build history のページにて実行されていることを確認する
 
 ![](./_img/06-03.png)
 
 ![](./_img/06-04.png)
 
++ Cloud Run にデプロイされていることを確認する
+
 ![](./_img/06-05.png)
+
++ Cloud Run にデプロイされた Service を Web ブラウザで確認する
 
 ![](./_img/06-06.png)
 
+
+
+---> これで Cloud Run に意図したデプロイをすることが出来ました :)
+
 ### 99. クリーンアップ
+
+ハンズオン終了後は不要なリソースは削除しましょう ;)
 
 <details>
 <summary>Cloud Run の Service の削除</summary>
@@ -251,6 +267,8 @@ gcloud storage rm -r gs://${_gc_pj_id}-${_common} --project ${_gc_pj_id}
 <details>
 <summary>Service Account の削除</summary>
 
++ Role の削除
+
 ```
 ### Logs Writer
 gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
@@ -281,9 +299,11 @@ gcloud beta projects remove-iam-policy-binding ${_gc_pj_id} \
   --member="serviceAccount:sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com" \
   --role="roles/iam.serviceAccountUser" \
   --project ${_gc_pj_id}
+```
 
++ Service Account の削除
 
-
+```
 gcloud beta iam service-accounts delete sa-${_common}-cloudbuild@${_gc_pj_id}.iam.gserviceaccount.com \
   --project ${_gc_pj_id}
 
