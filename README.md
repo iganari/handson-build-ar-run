@@ -1,7 +1,5 @@
 # Hands On Deploy from Cloud Build to Cloud Run( using Artifact Registry )
 
-Cloud Build のハンズオン集です :)
-
 ## 概要
 
 GitHub と連携した Cloud Build から Cloud Run にサンプルアプリケーションをデプロイします
