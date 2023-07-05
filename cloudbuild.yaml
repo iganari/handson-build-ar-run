@@ -2,7 +2,7 @@ steps:
   - id: "Build Container Image to Artifact Registry"
     name: gcr.io/cloud-builders/docker
     entrypoint: bash
-    dir: 'WIP'
+    # dir: 'WIP'
     args:
       - -c
       - |
@@ -14,7 +14,7 @@ steps:
   - id: "Deploy Container Image to Cloud Run"
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
-    dir: 'WIP'
+    # dir: 'WIP'
     args:
       - -c
       - |
