@@ -71,7 +71,7 @@ gcloud beta iam service-accounts describe \
   + Logs Writer( `roles/logging.logWriter` )
   + Storage Admin( `roles/storage.admin` )
   + Artifact Registry Writer( `roles/artifactregistry.writer` )
-  + Cloud Run Developer( `roles/run.developer` )
+  + Cloud Run Admin( `roles/run.admin` )
   + Service Account User( `roles/iam.serviceAccountUser` ) 
 
 ```
