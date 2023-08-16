@@ -10,7 +10,7 @@ Cloud Run で使うコンテナイメージの保存先は Artifact Registry を
 
 ## ハンズオン
 
-### 0. 準備
+## 0. 準備
 
 ```
 export _gc_pj_id='Your Google Cloud Project ID'
@@ -47,7 +47,7 @@ git clone https://github.com/iganari/handson-build-ar-run.git
 cd handson-build-ar-run
 ```
 
-### 1. Service Account の作成と Role の付与
+## 1. Service Account の作成と Role の付与
 
 + Cloud Build 用の Service Account の作成をします
 
@@ -131,7 +131,7 @@ gcloud beta iam service-accounts describe \
 今の所無し
 ```
 
-### 2. Google Cloud Storage Bucket の作成
+## 2. Google Cloud Storage Bucket の作成
 
 + Cloud Storage Bucket の作成をします
 
@@ -146,7 +146,7 @@ gcloud storage buckets create gs://${_gc_pj_id}-${_common} \
   --project ${_gc_pj_id}
 ```
 
-### 3. Artifact Registry のリポジトリの作成
+## 3. Artifact Registry のリポジトリの作成
 
 + Artifact Registry のリポジトリの作成します
 
@@ -160,7 +160,7 @@ gcloud beta artifacts repositories create ${_ar_repo_name} \
   --project ${_gc_pj_id}
 ```
 
-### 4. GitHub と Cloud Build の連携設定
+## 4. GitHub と Cloud Build の連携設定
 
 Google Cloud と GitHub を連携します
 
@@ -179,7 +179,7 @@ https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github
 
 ![](./_img/04-04.png)
 
-### 5. Cloud Build Trigger の作成
+## 5. Cloud Build Trigger の作成
 
 + Cloud Build Trigger の作成します
 
@@ -195,7 +195,7 @@ gcloud builds triggers create github \
   --substitutions _ARTIFACT_RRGISTRY_REPO_NAME=${_region}-docker.pkg.dev/${_gc_pj_id}/${_ar_repo_name},_CONTAINER_IMAGE_NAME=${_common},_RUN_SERVICE_NAME=run-${_common},_RUN_SERVICE_REGION=${_region},_RUN_SERVICE_PORT=80,_GCS_BUCKET=${_gc_pj_id}-${_common},_SERVICE_ACCOUNT=sa-${_common}-cloudrun@${_gc_pj_id}.iam.gserviceaccount.com
 ```
 
-### 6. Cloud Build の Trigger の実行
+## 6. Cloud Build の Trigger の実行
 
 + 作成した Cloud Build の Trigger の **RUN** ボタンをクリックします
 
@@ -223,7 +223,7 @@ gcloud builds triggers create github \
 
 ---> これで Cloud Run に意図したデプロイをすることが出来ました :)
 
-### 99. クリーンアップ
+## 99. クリーンアップ
 
 ハンズオン終了後は不要なリソースは削除しましょう ;)
 
