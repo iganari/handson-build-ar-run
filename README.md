@@ -8,6 +8,10 @@ Cloud Run で使うコンテナイメージの保存先は Artifact Registry を
 
 ![](./_img/overview.png)
 
+### 注意事項
+
+記載の情報は執筆当時の情報になります
+
 ## ハンズオン
 
 ## 0. 準備
